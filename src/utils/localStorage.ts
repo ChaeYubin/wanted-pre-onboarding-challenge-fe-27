@@ -31,3 +31,7 @@ export const storage = {
     }
   },
 };
+
+export const getToken = () => {
+  return storage.get('token');
+};
