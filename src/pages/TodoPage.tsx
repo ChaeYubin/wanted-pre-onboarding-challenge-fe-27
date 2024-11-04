@@ -1,4 +1,4 @@
-import { createTodo, getTodos } from '@/api/todo';
+import { createTodo, deleteTodo, getTodos } from '@/api/todo';
 import TodoDetail from '@/components/TodoDetail';
 import TodoList from '@/components/TodoList';
 import { TodoItem } from '@/types/todo';
@@ -30,6 +30,7 @@ const TodoPage = () => {
 
   const handleCreateTodo = async () => {
     const response = await createTodo({ title: newTitle, content: newContent, token: getToken() });
+
     if (response instanceof Error) {
       console.error(response.message);
       alert(response.message);
@@ -41,6 +42,19 @@ const TodoPage = () => {
     setNewTitle('');
     setNewContent('');
     setShowTodoCreateForm(false);
+  };
+
+  const handleDeleteTodo = async () => {
+    const response = await deleteTodo({ id: selectedTodo!.id, token: getToken() });
+
+    if (response instanceof Error) {
+      console.error(response.message);
+      alert(response.message);
+      return;
+    } else {
+      setTodoList(todoList.filter((todo) => todo.id !== selectedTodo!.id));
+      setSelectedTodo(null);
+    }
   };
 
   return (
@@ -82,15 +96,19 @@ const TodoPage = () => {
       </section>
       <section className="justify-self-start">
         <h2 className="text-xl font-semibold justify-self-start">상세</h2>
-        <div className="my-2">
-          <button type="button" className="border rounded-lg py-1 px-2 mr-2">
-            투두 수정
-          </button>
-          <button type="button" className="border rounded-lg py-1 px-2">
-            투두 삭제
-          </button>
-        </div>
-        <TodoDetail todo={selectedTodo} />
+        {selectedTodo && (
+          <>
+            <div className="my-2">
+              <button type="button" className="border rounded-lg py-1 px-2 mr-2">
+                투두 수정
+              </button>
+              <button type="button" className="border rounded-lg py-1 px-2" onClick={handleDeleteTodo}>
+                투두 삭제
+              </button>
+            </div>
+            <TodoDetail todo={selectedTodo} />
+          </>
+        )}
       </section>
     </div>
   );

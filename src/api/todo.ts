@@ -66,15 +66,11 @@ export const updateTodo = async ({ title, content, id, token }: UpdateTodoParams
 
 export const deleteTodo = async ({ id, token }: DeleteTodoParams): Promise<{ data: null } | Error> => {
   try {
-    const response = await axiosInstance.post(
-      '/todos',
-      { id },
-      {
-        headers: {
-          Authorization: token,
-        },
+    const response = await axiosInstance.delete(`/todos/${id}`, {
+      headers: {
+        Authorization: token,
       },
-    );
+    });
     return response.data.data;
   } catch (err: any) {
     return new Error(err.response?.data?.details || '투두 삭제 오류가 발생했습니다.');
