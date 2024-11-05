@@ -99,82 +99,92 @@ const TodoPage = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    window.location.href = '/';
+  };
+
   return getToken() === null ? (
     <>
       <Link to="/auth/login">로그인하러 가기 →</Link>
     </>
   ) : (
-    <div className="grid justify-items-stretch grid-cols-2 pt-8 gap-3">
-      <section className="justify-self-start w-full">
-        <h2 className="text-xl font-semibold">목록</h2>
-        <div className="my-2">
-          <button type="button" className="border rounded-lg py-1 px-2" onClick={() => setShowTodoCreateForm(true)}>
-            새로운 투두 생성
-          </button>
-        </div>
-        {showTodoCreateForm && (
-          <div className="my-3 border rounded-lg p-3">
-            <div>
-              제목: <input className="border rounded-sm py-1 px-2" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
-            </div>
-            <div className="mt-3">
-              내용: <input className="border rounded-sm py-1 px-2" value={newContent} onChange={(e) => setNewContent(e.target.value)} />
-            </div>
-            <div className="flex space-x-2 mt-3">
-              <button
-                type="button"
-                className="border rounded-lg py-1 px-2"
-                onClick={() => {
-                  setShowTodoCreateForm(false);
-                  setNewTitle('');
-                  setNewContent('');
-                }}
-              >
-                취소
-              </button>
-              <button type="button" className="border rounded-lg py-1 px-2" onClick={handleCreateTodo}>
-                생성
-              </button>
-            </div>
+    <>
+      <button type="button" className="border rounded-lg py-1 px-2" onClick={handleLogout}>
+        로그아웃
+      </button>
+      <div className="grid justify-items-stretch grid-cols-2 pt-8 gap-3">
+        <section className="justify-self-start w-full">
+          <h2 className="text-xl font-semibold">목록</h2>
+          <div className="my-2">
+            <button type="button" className="border rounded-lg py-1 px-2" onClick={() => setShowTodoCreateForm(true)}>
+              새로운 투두 생성
+            </button>
           </div>
-        )}
-        <TodoList todoList={todoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
-      </section>
-      <section className="justify-self-start w-full">
-        <h2 className="text-xl font-semibold justify-self-start">상세</h2>
-        {selectedTodo && (
-          <div>
-            <div className="my-2">
-              <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleUpdateTodoForm}>
-                투두 수정
-              </button>
-              <button type="button" className="border rounded-lg py-1 px-2" onClick={handleDeleteTodo}>
-                투두 삭제
-              </button>
+          {showTodoCreateForm && (
+            <div className="my-3 border rounded-lg p-3">
+              <div>
+                제목: <input className="border rounded-sm py-1 px-2" value={newTitle} onChange={(e) => setNewTitle(e.target.value)} />
+              </div>
+              <div className="mt-3">
+                내용: <input className="border rounded-sm py-1 px-2" value={newContent} onChange={(e) => setNewContent(e.target.value)} />
+              </div>
+              <div className="flex space-x-2 mt-3">
+                <button
+                  type="button"
+                  className="border rounded-lg py-1 px-2"
+                  onClick={() => {
+                    setShowTodoCreateForm(false);
+                    setNewTitle('');
+                    setNewContent('');
+                  }}
+                >
+                  취소
+                </button>
+                <button type="button" className="border rounded-lg py-1 px-2" onClick={handleCreateTodo}>
+                  생성
+                </button>
+              </div>
             </div>
+          )}
+          <TodoList todoList={todoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
+        </section>
+        <section className="justify-self-start w-full">
+          <h2 className="text-xl font-semibold justify-self-start">상세</h2>
+          {selectedTodo && (
             <div>
-              {showEditForm && (
-                <div className="flex flex-row items-center my-2">
-                  <p className="min-w-12">제목:</p>
-                  <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="border rounded-lg py-1 px-2 w-full" />
-                </div>
-              )}
-              <TodoDetail todo={selectedTodo} canEdit={showEditForm} editedContent={editedContent} setEditedContent={setEditedContent} />
-              {showEditForm && (
-                <div className="my-2">
-                  <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleEditCancel}>
-                    취소
-                  </button>
-                  <button type="button" className="border rounded-lg py-1 px-2" onClick={handleUpdateTodo}>
-                    완료
-                  </button>
-                </div>
-              )}
+              <div className="my-2">
+                <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleUpdateTodoForm}>
+                  투두 수정
+                </button>
+                <button type="button" className="border rounded-lg py-1 px-2" onClick={handleDeleteTodo}>
+                  투두 삭제
+                </button>
+              </div>
+              <div>
+                {showEditForm && (
+                  <div className="flex flex-row items-center my-2">
+                    <p className="min-w-12">제목:</p>
+                    <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="border rounded-lg py-1 px-2 w-full" />
+                  </div>
+                )}
+                <TodoDetail todo={selectedTodo} canEdit={showEditForm} editedContent={editedContent} setEditedContent={setEditedContent} />
+                {showEditForm && (
+                  <div className="my-2">
+                    <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleEditCancel}>
+                      취소
+                    </button>
+                    <button type="button" className="border rounded-lg py-1 px-2" onClick={handleUpdateTodo}>
+                      완료
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        )}
-      </section>
-    </div>
+          )}
+        </section>
+      </div>
+    </>
   );
 };
 
