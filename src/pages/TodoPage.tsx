@@ -4,6 +4,7 @@ import TodoList from '@/components/TodoList';
 import { TodoItem } from '@/types/todo';
 import { getToken } from '@/utils/localStorage';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const TodoPage = () => {
   const [todoList, setTodoList] = useState<TodoItem[]>([]);
@@ -57,7 +58,11 @@ const TodoPage = () => {
     }
   };
 
-  return (
+  return getToken() === undefined ? (
+    <>
+      <Link to="/auth/login">로그인하러 가기 →</Link>
+    </>
+  ) : (
     <div className="grid justify-items-stretch grid-cols-2 pt-8 gap-3">
       <section className="justify-self-start w-full">
         <h2 className="text-xl font-semibold">목록</h2>
