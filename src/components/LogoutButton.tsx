@@ -1,7 +1,7 @@
 const LogoutButton = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.reload(); // 새로고침
+    window.location.reload();
   };
 
   return (

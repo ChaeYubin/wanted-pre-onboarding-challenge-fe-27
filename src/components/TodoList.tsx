@@ -8,8 +8,6 @@ interface Props {
   setTodoList: Dispatch<TodoItem[]>;
   selectedTodo: TodoItem | null;
   setSelectedTodo: Dispatch<TodoItem>;
-  // showTodoCreateForm: boolean;
-  // setShowTodoCreateForm: Dispatch<boolean>;
 }
 
 const TodoList = ({ todoList, setTodoList, selectedTodo, setSelectedTodo }: Props) => {
