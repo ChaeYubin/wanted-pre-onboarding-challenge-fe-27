@@ -2,7 +2,7 @@
 
 ## 프로젝트 소개
 
-투두리스트 애플리케이션입니다.
+[원티드 프리온보딩 챌린지 사전 과제](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api)로 제작한 투두리스트 애플리케이션입니다.
 
 ## 구현 기능
 
