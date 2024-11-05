@@ -110,14 +110,14 @@ const TodoPage = () => {
     </>
   ) : (
     <>
-      <button type="button" className="border rounded-lg py-1 px-2" onClick={handleLogout}>
+      <button type="button" onClick={handleLogout}>
         로그아웃
       </button>
       <div className="grid justify-items-stretch grid-cols-2 pt-8 gap-3">
         <section className="justify-self-start w-full">
           <h2 className="text-xl font-semibold">목록</h2>
           <div className="my-2">
-            <button type="button" className="border rounded-lg py-1 px-2" onClick={() => setShowTodoCreateForm(true)}>
+            <button type="button" onClick={() => setShowTodoCreateForm(true)}>
               새로운 투두 생성
             </button>
           </div>
@@ -132,7 +132,6 @@ const TodoPage = () => {
               <div className="flex space-x-2 mt-3">
                 <button
                   type="button"
-                  className="border rounded-lg py-1 px-2"
                   onClick={() => {
                     setShowTodoCreateForm(false);
                     setNewTitle('');
@@ -141,7 +140,7 @@ const TodoPage = () => {
                 >
                   취소
                 </button>
-                <button type="button" className="border rounded-lg py-1 px-2" onClick={handleCreateTodo}>
+                <button type="button" onClick={handleCreateTodo}>
                   생성
                 </button>
               </div>
@@ -154,10 +153,10 @@ const TodoPage = () => {
           {selectedTodo && (
             <div>
               <div className="my-2">
-                <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleUpdateTodoForm}>
+                <button type="button" className="mr-2" onClick={handleUpdateTodoForm}>
                   투두 수정
                 </button>
-                <button type="button" className="border rounded-lg py-1 px-2" onClick={handleDeleteTodo}>
+                <button type="button" onClick={handleDeleteTodo}>
                   투두 삭제
                 </button>
               </div>
@@ -165,16 +164,16 @@ const TodoPage = () => {
                 {showEditForm && (
                   <div className="flex flex-row items-center my-2">
                     <p className="min-w-12">제목:</p>
-                    <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="border rounded-lg py-1 px-2 w-full" />
+                    <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="w-full" />
                   </div>
                 )}
                 <TodoDetail todo={selectedTodo} canEdit={showEditForm} editedContent={editedContent} setEditedContent={setEditedContent} />
                 {showEditForm && (
                   <div className="my-2">
-                    <button type="button" className="border rounded-lg py-1 px-2 mr-2" onClick={handleEditCancel}>
+                    <button type="button" className="mr-2" onClick={handleEditCancel}>
                       취소
                     </button>
-                    <button type="button" className="border rounded-lg py-1 px-2" onClick={handleUpdateTodo}>
+                    <button type="button" onClick={handleUpdateTodo}>
                       완료
                     </button>
                   </div>
