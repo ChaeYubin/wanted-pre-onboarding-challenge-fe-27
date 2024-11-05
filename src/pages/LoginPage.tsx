@@ -28,16 +28,16 @@ const LoginPage = () => {
   };
 
   return (
-    <>
-      <h2>로그인</h2>
-      <div>
-        <input type="email" placeholder="이메일을 입력해주세요." value={email} onChange={(e) => setEmail(e.target.value)} />
-        <input type="password" placeholder="비밀번호를 입력해주세요." value={password} onChange={(e) => setPassword(e.target.value)} />
-        <button type="button" disabled={!validateEmail(email) || !validatePassword(password)} onClick={handleLogin}>
+    <div className="mt-3">
+      <h2 className="text-2xl font-extrabold">로그인</h2>
+      <div className="flex space-x-2 mt-3">
+        <input type="email" placeholder="이메일을 입력해주세요." value={email} onChange={(e) => setEmail(e.target.value)} className="border py-1 px-2 rounded-md" />
+        <input type="password" placeholder="비밀번호를 입력해주세요." value={password} onChange={(e) => setPassword(e.target.value)} className="border py-1 px-2 rounded-md" />
+        <button type="button" disabled={!validateEmail(email) || !validatePassword(password)} onClick={handleLogin} className="border py-1 px-2 rounded-md">
           로그인
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
