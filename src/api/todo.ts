@@ -50,8 +50,8 @@ export const createTodo = async ({ title, content, token }: CreateTodoParams): P
 export const updateTodo = async ({ title, content, id, token }: UpdateTodoParams): Promise<TodoItem | Error> => {
   try {
     const response = await axiosInstance.put(
-      '/todos',
-      { title, content, id },
+      `/todos/${id}`,
+      { title, content },
       {
         headers: {
           Authorization: token,
