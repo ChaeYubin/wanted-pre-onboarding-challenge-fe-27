@@ -1,36 +1,14 @@
-import { useEffect, useState } from 'react';
-
-import { getTodos } from '@/api/todo';
 import TodoDetail from '@/components/TodoDetail';
 import TodoList from '@/components/TodoList';
-import { TodoItem } from '@/types/todo';
-import { getToken } from '@/utils/localStorage';
+import { useGetTodos } from '@/store/todoStore';
 
 const TodoPage = () => {
-  const [todoList, setTodoList] = useState<TodoItem[]>([]);
-  const [selectedTodo, setSelectedTodo] = useState<TodoItem | null>(null);
-
-  useEffect(() => {
-    const getTodoList = async () => {
-      const response = await getTodos(getToken());
-      if (response instanceof Error) {
-        console.error(response.message);
-        alert(response.message);
-        return;
-      } else {
-        setTodoList(response);
-      }
-    };
-
-    if (getToken()) {
-      getTodoList();
-    }
-  }, []);
+  useGetTodos();
 
   return (
     <div className="grid justify-items-stretch grid-cols-2 mt-16 gap-3 h-[500px]">
-      <TodoList todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
-      <TodoDetail todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
+      <TodoList />
+      <TodoDetail />
     </div>
   );
 };

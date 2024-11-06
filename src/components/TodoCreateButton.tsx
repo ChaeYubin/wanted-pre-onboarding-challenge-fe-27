@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import { Plus } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -6,33 +6,14 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { createTodo } from '@/api/todo';
-import { getToken } from '@/utils/localStorage';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { TodoItem } from '@/types/todo';
+import { useCreateTodo } from '@/store/todoStore';
 
-interface Props {
-  todoList: TodoItem[];
-  setTodoList: Dispatch<TodoItem[]>;
-}
-
-const TodoCreateButton = ({ todoList, setTodoList }: Props) => {
+const TodoCreateButton = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
-  const handleCreateTodo = async (title: string, content: string) => {
-    const response = await createTodo({ title: title, content: content, token: getToken() });
-
-    if (response instanceof Error) {
-      console.error(response.message);
-      alert(response.message);
-      return;
-    } else {
-      setTodoList([...todoList, response]);
-    }
-
-    resetInputs();
-  };
+  const createTodo = useCreateTodo();
 
   const resetInputs = () => {
     setTitle('');
@@ -72,7 +53,14 @@ const TodoCreateButton = ({ todoList, setTodoList }: Props) => {
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button type="button" onClick={() => handleCreateTodo(title, content)} disabled={title === '' || content === ''}>
+            <Button
+              type="button"
+              onClick={() => {
+                createTodo(title, content);
+                resetInputs();
+              }}
+              disabled={title === '' || content === ''}
+            >
               추가
             </Button>
           </DialogClose>

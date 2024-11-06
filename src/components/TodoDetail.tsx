@@ -1,61 +1,20 @@
-import { Dispatch, useState } from 'react';
+import { useState } from 'react';
 import { Check, Pencil, Trash, X } from 'lucide-react';
 
-import { deleteTodo, updateTodo } from '@/api/todo';
-import { TodoItem } from '@/types/todo';
-import { getToken } from '@/utils/localStorage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { useDeleteTodo, useSelectSelectedTodo, useUpdateTodo } from '@/store/todoStore';
 
-interface Props {
-  selectedTodo: TodoItem | null;
-  setSelectedTodo: Dispatch<TodoItem | null>;
-  todoList: TodoItem[];
-  setTodoList: Dispatch<TodoItem[]>;
-}
-
-const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Props) => {
+const TodoDetail = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [editedContent, setEditedContent] = useState<string>('');
 
-  const handleUpdateTodo = async () => {
-    const response = await updateTodo({ id: selectedTodo!.id, title: editedTitle, content: editedContent, token: getToken() });
-
-    if (response instanceof Error) {
-      console.error(response.message);
-      alert(response.message);
-      return;
-    } else {
-      setTodoList(
-        todoList.map((todo) => {
-          if (todo.id === selectedTodo!.id) {
-            return { ...todo, title: editedTitle, content: editedContent };
-          } else {
-            return todo;
-          }
-        }),
-      );
-
-      setSelectedTodo({ ...selectedTodo!, title: editedTitle, content: editedContent });
-      setIsEditing(false);
-    }
-  };
-
-  const handleDeleteTodo = async () => {
-    const response = await deleteTodo({ id: selectedTodo!.id, token: getToken() });
-
-    if (response instanceof Error) {
-      console.error(response.message);
-      alert(response.message);
-      return;
-    } else {
-      setTodoList(todoList.filter((todo) => todo.id !== selectedTodo!.id));
-      setSelectedTodo(null);
-    }
-  };
+  const selectedTodo = useSelectSelectedTodo();
+  const updateTodo = useUpdateTodo();
+  const deleteTodo = useDeleteTodo();
 
   const handleUpdateTodoForm = () => {
     setEditedTitle(selectedTodo?.title || '');
@@ -79,7 +38,16 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
               <Button type="button" variant="outline" size="icon" onClick={handleEditCancel}>
                 <X />
               </Button>
-              <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleUpdateTodo}>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="ml-2"
+                onClick={() => {
+                  updateTodo(selectedTodo!.id, editedTitle, editedContent);
+                  setIsEditing(false);
+                }}
+              >
                 <Check />
               </Button>
             </>
@@ -88,7 +56,16 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
               <Button type="button" variant="outline" size="icon" onClick={handleUpdateTodoForm}>
                 <Pencil />
               </Button>
-              <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleDeleteTodo}>
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="ml-2"
+                onClick={() => {
+                  deleteTodo(selectedTodo!.id);
+                  setIsEditing(false);
+                }}
+              >
                 <Trash />
               </Button>
             </>
@@ -109,7 +86,7 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
             <Textarea
               value={isEditing ? editedContent : selectedTodo?.content}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="focus-visible:ring-0 border-none shadow-none resize-none"
+              className="focus-visible:ring-0 border-none shadow-none resize-none min-h-[300px]"
               readOnly={!isEditing}
             />
           </div>
