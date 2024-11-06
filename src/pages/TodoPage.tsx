@@ -11,18 +11,18 @@ const TodoPage = () => {
   const [todoList, setTodoList] = useState<TodoItem[]>([]);
   const [selectedTodo, setSelectedTodo] = useState<TodoItem | null>(null);
 
-  const getTodoList = async () => {
-    const response = await getTodos(getToken());
-    if (response instanceof Error) {
-      console.error(response.message);
-      alert(response.message);
-      return;
-    } else {
-      setTodoList(response);
-    }
-  };
-
   useEffect(() => {
+    const getTodoList = async () => {
+      const response = await getTodos(getToken());
+      if (response instanceof Error) {
+        console.error(response.message);
+        alert(response.message);
+        return;
+      } else {
+        setTodoList(response);
+      }
+    };
+
     if (getToken()) {
       getTodoList();
     }
