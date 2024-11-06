@@ -39,3 +39,7 @@ export const getToken = () => {
 export const setToken = (token: string) => {
   storage.set('token', token);
 };
+
+export const removeToken = () => {
+  storage.remove('token');
+};

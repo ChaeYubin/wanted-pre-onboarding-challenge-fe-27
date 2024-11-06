@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -7,15 +6,11 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { validateEmail, validatePassword } from '@/utils/auth';
-import { useAuth } from '@/hooks/useAuth';
+import { useLogin, useSignUp } from '@/store/authStore';
 
 const AuthPage = () => {
-  const navigate = useNavigate();
-  const { isLoggedIn, login, signUp } = useAuth();
-
-  if (isLoggedIn) {
-    navigate('/todo');
-  }
+  const login = useLogin();
+  const signUp = useSignUp();
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -50,7 +45,7 @@ const AuthPage = () => {
               </div>
             </CardContent>
             <CardFooter>
-              <Button onClick={() => login(email, password, '/todo')} disabled={!validateEmail(email) || !validatePassword(password)}>
+              <Button onClick={() => login(email, password)} disabled={!validateEmail(email) || !validatePassword(password)}>
                 로그인
               </Button>
             </CardFooter>
