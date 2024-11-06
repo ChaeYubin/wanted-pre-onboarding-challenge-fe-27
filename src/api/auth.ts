@@ -1,5 +1,5 @@
 import { AuthResponse, LoginInfo, SignUpInfo } from '@/types/auth';
-import axiosInstance from '../libs/axiosInstance';
+import axiosInstance from '../lib/axiosInstance';
 
 export const signUp = async ({ email, password }: SignUpInfo): Promise<AuthResponse | Error> => {
   try {

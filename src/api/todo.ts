@@ -1,5 +1,5 @@
 import { DeleteTodoParams, UpdateTodoParams } from './../types/todo';
-import axiosInstance from '../libs/axiosInstance';
+import axiosInstance from '../lib/axiosInstance';
 import { CreateTodoParams, TodoItem } from '@/types/todo';
 
 export const getTodos = async (token: string): Promise<TodoItem[] | Error> => {

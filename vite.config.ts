@@ -10,7 +10,9 @@ export default defineConfig({
     port: 3000,
   },
   resolve: {
-    alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
   },
   css: {
     postcss: {
