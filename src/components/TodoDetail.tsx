@@ -1,5 +1,5 @@
 import { Dispatch, useState } from 'react';
-import { Pencil, Trash } from 'lucide-react';
+import { Check, Pencil, Trash, X } from 'lucide-react';
 
 import { deleteTodo, updateTodo } from '@/api/todo';
 import { TodoItem } from '@/types/todo';
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Props) => {
-  const [showEditForm, setShowEditForm] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editedTitle, setEditedTitle] = useState<string>('');
   const [editedContent, setEditedContent] = useState<string>('');
 
@@ -40,7 +40,7 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
       );
 
       setSelectedTodo({ ...selectedTodo!, title: editedTitle, content: editedContent });
-      setShowEditForm(false);
+      setIsEditing(false);
     }
   };
 
@@ -60,13 +60,13 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
   const handleUpdateTodoForm = () => {
     setEditedTitle(selectedTodo?.title || '');
     setEditedContent(selectedTodo?.content || '');
-    setShowEditForm(true);
+    setIsEditing(true);
   };
 
   const handleEditCancel = () => {
-    setShowEditForm(false);
     setEditedTitle('');
     setEditedContent('');
+    setIsEditing(false);
   };
 
   return (
@@ -74,35 +74,44 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
       <CardHeader className="flex flex-row items-center">
         <CardTitle className="text-2xl font-extrabold">Detail</CardTitle>
         <div className={`ml-auto ${selectedTodo ? 'visible' : 'invisible'}`}>
-          <Button type="button" variant="outline" size="icon" onClick={handleUpdateTodoForm}>
-            <Pencil />
-          </Button>
-          <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleDeleteTodo}>
-            <Trash />
-          </Button>
+          {isEditing ? (
+            <>
+              <Button type="button" variant="outline" size="icon" onClick={handleEditCancel}>
+                <X />
+              </Button>
+              <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleUpdateTodo}>
+                <Check />
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button type="button" variant="outline" size="icon" onClick={handleUpdateTodoForm}>
+                <Pencil />
+              </Button>
+              <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleDeleteTodo}>
+                <Trash />
+              </Button>
+            </>
+          )}
         </div>
       </CardHeader>
       <CardContent>
         {selectedTodo && (
           <div>
-            <Input type="text" value={selectedTodo?.title || editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="focus-visible:ring-0 border-none shadow-none" />
+            <Input
+              type="text"
+              value={isEditing ? editedTitle : selectedTodo?.title}
+              readOnly={!isEditing}
+              onChange={(e) => setEditedTitle(e.target.value)}
+              className="focus-visible:ring-0 border-none shadow-none"
+            />
             <hr className="my-1" />
             <Textarea
-              value={showEditForm ? editedContent : selectedTodo?.content}
+              value={isEditing ? editedContent : selectedTodo?.content}
               onChange={(e) => setEditedContent(e.target.value)}
-              className="focus-visible:ring-0 border-none shadow-none"
-              readOnly={!showEditForm}
+              className="focus-visible:ring-0 border-none shadow-none resize-none"
+              readOnly={!isEditing}
             />
-            {showEditForm && (
-              <div className="my-2">
-                <button type="button" className="mr-2" onClick={handleEditCancel}>
-                  취소
-                </button>
-                <button type="button" onClick={handleUpdateTodo}>
-                  완료
-                </button>
-              </div>
-            )}
           </div>
         )}
       </CardContent>

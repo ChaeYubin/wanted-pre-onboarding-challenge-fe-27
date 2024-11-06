@@ -31,6 +31,10 @@ const TodoCreateButton = ({ todoList, setTodoList }: Props) => {
       setTodoList([...todoList, response]);
     }
 
+    resetInputs();
+  };
+
+  const resetInputs = () => {
     setTitle('');
     setContent('');
   };
@@ -58,17 +62,17 @@ const TodoCreateButton = ({ todoList, setTodoList }: Props) => {
             <Label htmlFor="content" className="flex-none">
               내용
             </Label>
-            <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} className="focus-visible:ring-0" />
+            <Textarea id="content" value={content} onChange={(e) => setContent(e.target.value)} className="focus-visible:ring-0 resize-none" />
           </div>
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button type="button" variant="outline" onClick={() => {}}>
+            <Button type="button" variant="outline" onClick={resetInputs}>
               취소
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button type="button" onClick={() => handleCreateTodo(title, content)}>
+            <Button type="button" onClick={() => handleCreateTodo(title, content)} disabled={title === '' || content === ''}>
               추가
             </Button>
           </DialogClose>
