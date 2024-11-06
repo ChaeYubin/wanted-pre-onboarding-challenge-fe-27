@@ -1,7 +1,13 @@
+import { Dispatch, useState } from 'react';
+import { Pencil, Trash } from 'lucide-react';
+
 import { deleteTodo, updateTodo } from '@/api/todo';
 import { TodoItem } from '@/types/todo';
 import { getToken } from '@/utils/localStorage';
-import { Dispatch, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 
 interface Props {
   selectedTodo: TodoItem | null;
@@ -64,34 +70,29 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
   };
 
   return (
-    <section className="justify-self-start w-full">
-      <h2 className="text-xl font-semibold justify-self-start">상세</h2>
-      {selectedTodo && (
-        <div>
-          <div className="my-2">
-            <button type="button" className="mr-2" onClick={handleUpdateTodoForm}>
-              투두 수정
-            </button>
-            <button type="button" onClick={handleDeleteTodo}>
-              투두 삭제
-            </button>
-          </div>
+    <Card className="justify-self-start w-full">
+      <CardHeader className="flex flex-row items-center">
+        <CardTitle className="text-2xl font-extrabold">Detail</CardTitle>
+        <div className={`ml-auto ${selectedTodo ? 'visible' : 'invisible'}`}>
+          <Button type="button" variant="outline" size="icon" onClick={handleUpdateTodoForm}>
+            <Pencil />
+          </Button>
+          <Button type="button" variant="outline" size="icon" className="ml-2" onClick={handleDeleteTodo}>
+            <Trash />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent>
+        {selectedTodo && (
           <div>
-            {showEditForm && (
-              <div className="flex flex-row items-center my-2">
-                <p className="min-w-12">제목:</p>
-                <input type="text" value={editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="border rounded-lg py-1 px-2 w-full" />
-              </div>
-            )}
-            <div className="flex items-start">
-              <p className="min-w-12">내용: </p>
-              <textarea
-                value={showEditForm ? editedContent : selectedTodo?.content}
-                onChange={(e) => setEditedContent(e.target.value)}
-                className="w-full min-h-32 border rounded-lg py-1 px-2"
-                readOnly={!showEditForm}
-              />
-            </div>
+            <Input type="text" value={selectedTodo?.title || editedTitle} onChange={(e) => setEditedTitle(e.target.value)} className="focus-visible:ring-0 border-none shadow-none" />
+            <hr className="my-1" />
+            <Textarea
+              value={showEditForm ? editedContent : selectedTodo?.content}
+              onChange={(e) => setEditedContent(e.target.value)}
+              className="focus-visible:ring-0 border-none shadow-none"
+              readOnly={!showEditForm}
+            />
             {showEditForm && (
               <div className="my-2">
                 <button type="button" className="mr-2" onClick={handleEditCancel}>
@@ -103,9 +104,9 @@ const TodoDetail = ({ selectedTodo, setSelectedTodo, todoList, setTodoList }: Pr
               </div>
             )}
           </div>
-        </div>
-      )}
-    </section>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 

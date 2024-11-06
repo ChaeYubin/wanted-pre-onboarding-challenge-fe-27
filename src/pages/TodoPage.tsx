@@ -28,12 +28,10 @@ const TodoPage = () => {
   }, []);
 
   return (
-    <>
-      <div className="grid justify-items-stretch grid-cols-2 pt-8 gap-3">
-        <TodoList todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
-        <TodoDetail todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
-      </div>
-    </>
+    <div className="grid justify-items-stretch grid-cols-2 mt-16 gap-3 h-[500px]">
+      <TodoList todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
+      <TodoDetail todoList={todoList} setTodoList={setTodoList} selectedTodo={selectedTodo} setSelectedTodo={setSelectedTodo} />
+    </div>
   );
 };
 

@@ -28,7 +28,7 @@ const MainPage = () => {
         )}
       </div>
       <p className="text-sm text-gray-600">할 일을 추가하고, 수정하고, 삭제할 수 있습니다.</p>
-      <p className="text-sm text-gray-600">해야 할 일을 체계적으로 관리하고 하나씩 지워나가보세요!</p>
+      <p className="text-sm text-gray-600">할 일을 체계적으로 관리하고 완료해보세요!</p>
 
       <Outlet />
     </div>
