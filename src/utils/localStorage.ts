@@ -1,4 +1,4 @@
-export const storage = {
+const storage = {
   set(key: string, value: any) {
     try {
       const jsonValue = JSON.stringify(value); // 객체를 문자열로 변환
@@ -34,4 +34,8 @@ export const storage = {
 
 export const getToken = () => {
   return storage.get('token');
+};
+
+export const setToken = (token: string) => {
+  storage.set('token', token);
 };

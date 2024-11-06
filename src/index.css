@@ -63,12 +63,6 @@
   }
 }
 
-@layer components {
-  button {
-    @apply border rounded-lg py-1 px-2;
-  }
-}
-
 @layer base {
   * {
     @apply border-border;
