@@ -59,8 +59,7 @@ const TodoDetail = () => {
               </Button>
               <AlertModal
                 title="투두 삭제"
-                description="투두를 정말 삭제하시겠어요? 삭제 후에는 복구가 불가능합니다."
-                cancelButtonText="취소"
+                description="정말 삭제하시겠어요? 삭제 후에는 복구가 불가능합니다."
                 confirmButtonText="삭제"
                 onConfirm={() => {
                   deleteTodo(selectedTodo!.id);

@@ -14,13 +14,13 @@ import { ReactNode } from 'react';
 interface Props {
   children: ReactNode;
   title: string;
-  description: string;
-  cancelButtonText: string;
+  description?: string;
+  cancelButtonText?: string;
   confirmButtonText: string;
   onConfirm: () => void;
 }
 
-const AlertModal = ({ children, title, description, cancelButtonText, confirmButtonText, onConfirm }: Props) => {
+const AlertModal = ({ title, description, cancelButtonText = '취소', confirmButtonText, onConfirm, children }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
