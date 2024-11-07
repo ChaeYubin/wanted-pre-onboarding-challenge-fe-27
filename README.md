@@ -13,6 +13,7 @@
 
 - React + Vite + Typescript
 - react-router-dom
+- Zustand
 - Axios
-- TailwindCSS
+- TailwindCSS + shadcn/ui
 - ESLint, Prettier
