@@ -54,9 +54,9 @@ const TodoDetail = () => {
       <CardContent>
         {selectedTodo && (
           <div>
-            <Input type="text" value={selectedTodo?.title} readOnly className="border-none shadow-none" />
+            <Input type="text" value={selectedTodo?.title} readOnly className="focus-visible:ring-0 border-none shadow-none" />
             <hr className="my-1" />
-            <Textarea value={selectedTodo?.content} className="border-none shadow-none resize-none min-h-[300px]" readOnly />
+            <Textarea value={selectedTodo?.content} className="focus-visible:ring-0 border-none shadow-none resize-none min-h-[300px]" readOnly />
           </div>
         )}
       </CardContent>
