@@ -23,7 +23,6 @@ const useTodoStore = create<TodoStore>((set) => ({
 
   actions: {
     getTodos: async () => {
-      console.log('getTodos 호출');
       const response = await getTodos(getToken());
       if (response instanceof Error) {
         console.error(response.message);
@@ -31,6 +30,18 @@ const useTodoStore = create<TodoStore>((set) => ({
         return;
       } else {
         set({ todos: response });
+      }
+    },
+
+    getTodoById: async (id: string) => {
+      const response = await getTodoById({ id, token: getToken() });
+
+      if (response instanceof Error) {
+        console.error(response.message);
+        alert(response.message);
+        return;
+      } else {
+        set({ selectedTodo: response });
       }
     },
 
@@ -76,18 +87,6 @@ const useTodoStore = create<TodoStore>((set) => ({
         return;
       } else {
         set((state) => ({ todos: state.todos.filter((todo) => todo.id !== id), selectedTodo: null }));
-      }
-    },
-
-    getTodoById: async (id: string) => {
-      const response = await getTodoById({ id, token: getToken() });
-
-      if (response instanceof Error) {
-        console.error(response.message);
-        alert(response.message);
-        return;
-      } else {
-        set({ selectedTodo: response });
       }
     },
   },
