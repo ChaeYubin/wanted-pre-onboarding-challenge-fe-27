@@ -1,11 +1,21 @@
-import TodoList from '@/components/TodoList';
 import { Outlet } from 'react-router-dom';
 
+import TodoList from '@/components/TodoList';
+import { useSelectIsLoggedIn } from '@/store/authStore';
+
 const TodoPage = () => {
+  const isLoggedIn = useSelectIsLoggedIn();
+
   return (
     <div className="grid justify-items-stretch grid-cols-2 mt-16 gap-3 h-[500px]">
-      <TodoList />
-      <Outlet />
+      {!isLoggedIn ? (
+        <p className="text-center col-span-2">로그인이 필요합니다.</p>
+      ) : (
+        <>
+          <TodoList />
+          <Outlet />
+        </>
+      )}
     </div>
   );
 };
