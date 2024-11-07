@@ -23,6 +23,7 @@ const useTodoStore = create<TodoStore>((set) => ({
 
   actions: {
     getTodos: async () => {
+      console.log('getTodos 호출');
       const response = await getTodos(getToken());
       if (response instanceof Error) {
         console.error(response.message);
@@ -61,9 +62,8 @@ const useTodoStore = create<TodoStore>((set) => ({
               return todo;
             }
           }),
+          selectedTodo: response,
         }));
-
-        set((state) => ({ selectedTodo: state.todos.find((todo) => todo.id === id) }));
       }
     },
 

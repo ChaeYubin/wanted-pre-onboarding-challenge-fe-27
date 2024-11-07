@@ -1,12 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import TodoCreateButton from '@/components/TodoCreateButton';
-import { useGetTodoById, useSelectSelectedTodo, useSelectTodos } from '@/store/todoStore';
+import { useGetTodoById, useGetTodos, useSelectSelectedTodo, useSelectTodos } from '@/store/todoStore';
+import { useEffect } from 'react';
 
 const TodoList = () => {
   const todos = useSelectTodos();
+  const getTodos = useGetTodos();
   const selectedTodo = useSelectSelectedTodo();
   const getTodo = useGetTodoById();
+
+  useEffect(() => {
+    getTodos();
+  }, []);
 
   return (
     <Card className="justify-self-start w-full">
@@ -17,7 +23,7 @@ const TodoList = () => {
       <CardContent>
         <div className="flex flex-col space-y-1">
           {todos.map((todo) => (
-            <Button type="button" variant="ghost" className={`justify-start ${selectedTodo?.id === todo.id ? 'bg-zinc-100' : ''}`} onClick={() => getTodo(todo.id)}>
+            <Button key={todo.id} type="button" variant="ghost" className={`justify-start ${selectedTodo?.id === todo.id ? 'bg-zinc-100' : ''}`} onClick={() => getTodo(todo.id)}>
               {todo.title}
             </Button>
           ))}
