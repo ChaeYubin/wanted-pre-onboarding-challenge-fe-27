@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,7 +11,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;

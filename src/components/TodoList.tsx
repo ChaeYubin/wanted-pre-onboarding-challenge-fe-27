@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
+
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import TodoCreateButton from '@/components/TodoCreateButton';
 import { useGetTodoById, useGetTodos, useSelectSelectedTodo, useSelectTodos } from '@/store/todoStore';
-import { useEffect } from 'react';
 
 const TodoList = () => {
   const todos = useSelectTodos();
