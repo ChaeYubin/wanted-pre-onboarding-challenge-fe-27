@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useDeleteTodo, useSelectSelectedTodo, useUpdateTodo } from '@/store/todoStore';
+import AlertModal from './AlertModal';
 
 const TodoDetail = () => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
@@ -56,18 +57,20 @@ const TodoDetail = () => {
               <Button type="button" variant="outline" size="icon" onClick={handleUpdateTodoForm}>
                 <Pencil />
               </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                className="ml-2"
-                onClick={() => {
+              <AlertModal
+                title="투두 삭제"
+                description="투두를 정말 삭제하시겠어요? 삭제 후에는 복구가 불가능합니다."
+                cancelButtonText="취소"
+                confirmButtonText="삭제"
+                onConfirm={() => {
                   deleteTodo(selectedTodo!.id);
                   setIsEditing(false);
                 }}
               >
-                <Trash />
-              </Button>
+                <Button type="button" variant="outline" size="icon" className="ml-2">
+                  <Trash />
+                </Button>
+              </AlertModal>
             </>
           )}
         </div>
