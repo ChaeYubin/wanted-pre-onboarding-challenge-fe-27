@@ -11,7 +11,7 @@
 
 ### 프론트엔드
 
-[배포 링크](https://grayish-todo-app.vercel.app/)를 방문하시거나, 아래 명령어를 터미널에 입력해주세요.
+[배포 링크](https://grayish-todo-app.vercel.app/)에 방문하시거나, 아래 명령어를 터미널에 입력해주세요.
 
 ```bash
 git clone https://github.com/ChaeYubin/wanted-pre-onboarding-challenge-fe-27.git todo-app
@@ -37,11 +37,12 @@ yarn start # http://localhost:8080
 - 회원가입 및 로그인 기능
 - 투두리스트 추가 및 수정, 삭제 기능
 
-## 개발 환경
+## 사용한 기술 스택
 
 - React + Vite + Typescript
-- react-router-dom
-- Zustand
-- Axios
-- TailwindCSS + shadcn/ui
-- ESLint, Prettier
+- 라우팅 처리 - react-router-dom
+- 전역 상태 관리(client state) - Zustand
+- 서버 상태 관리 - Tanstack-query
+- HTTP 통신 - Axios
+- UI - TailwindCSS + shadcn/ui
+- 코드 품질 관리 - ESLint, Prettier
