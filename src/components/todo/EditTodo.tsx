@@ -8,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useGetTodoById, useUpdateTodo } from '@/hooks/useTodo';
 import { getToken } from '@/utils/localStorage';
+import toast from 'react-hot-toast';
 
 const EditTodo = () => {
   const navigate = useNavigate();
@@ -27,12 +28,19 @@ const EditTodo = () => {
   }, [isSuccess, todo]);
 
   const handleUpdateTodo = async (todoId: string, title: string, content: string) => {
-    await updateTodoMutation.mutateAsync({ title, content });
+    await updateTodoMutation.mutateAsync(
+      { title, content },
+      {
+        onSuccess: () => {
+          toast.success('할 일이 수정되었습니다.');
+        },
+      },
+    );
     navigate(`/todo/${todoId}`);
   };
 
   const handleEditCancel = () => {
-    navigate(`/todo/${todo?.id}`);
+    navigate(`/todo/${todoId}`);
   };
 
   return (

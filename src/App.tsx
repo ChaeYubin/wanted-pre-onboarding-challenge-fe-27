@@ -9,10 +9,12 @@ import './index.css';
 import { queryClient } from './lib/reactQueryProvider';
 import TodoDetail from './components/todo/TodoDetail';
 import EditTodo from './components/todo/EditTodo';
+import { Toaster } from 'react-hot-toast';
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <Toaster />
       <Routes>
         <Route path="/" element={<MainPage />}>
           <Route path="/auth" element={<AuthPage />} />

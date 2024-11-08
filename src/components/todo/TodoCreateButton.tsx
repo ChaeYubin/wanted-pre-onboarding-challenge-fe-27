@@ -8,8 +8,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { useCreateTodo } from '@/hooks/useTodo';
 import { getToken } from '@/utils/localStorage';
 import Modal from '@/components/common/Modal';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { TodoItem } from '@/types/todo';
 
 const TodoCreateButton = () => {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
@@ -21,8 +26,16 @@ const TodoCreateButton = () => {
   };
 
   const onConfirm = () => {
-    createTodoMutation.mutate({ title, content });
-    resetInputs();
+    createTodoMutation.mutate(
+      { title, content },
+      {
+        onSuccess: (data: TodoItem) => {
+          toast.success('할 일이 추가되었습니다.');
+          resetInputs();
+          navigate(`/todo/${data.id}`);
+        },
+      },
+    );
   };
 
   return (

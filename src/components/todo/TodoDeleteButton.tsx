@@ -4,6 +4,7 @@ import Alert from '@/components/common/Alert';
 import { Button } from '@/components/ui/button';
 import { useDeleteTodo } from '@/hooks/useTodo';
 import { getToken } from '@/utils/localStorage';
+import toast from 'react-hot-toast';
 
 interface Props {
   todoId: string;
@@ -13,7 +14,11 @@ const TodoDeleteButton = ({ todoId }: Props) => {
   const deleteTodoMutation = useDeleteTodo({ id: todoId, token: getToken(), redirectTo: '/todo' });
 
   const onConfirm = () => {
-    deleteTodoMutation.mutate();
+    deleteTodoMutation.mutate(undefined, {
+      onSuccess: () => {
+        toast.success('할 일이 삭제되었습니다.');
+      },
+    });
   };
 
   return (

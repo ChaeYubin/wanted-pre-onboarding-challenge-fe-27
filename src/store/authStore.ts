@@ -2,6 +2,7 @@ import { create } from 'zustand';
 
 import { getToken, setToken, removeToken } from '@/utils/localStorage';
 import { login as loginApi, signUp as signUpApi } from '@/api/auth';
+import toast from 'react-hot-toast';
 
 interface AuthStore {
   isLoggedIn: boolean;
@@ -21,13 +22,14 @@ const useAuthStore = create<AuthStore>((set) => ({
 
       if (response instanceof Error) {
         console.error(response.message);
-        alert(response.message);
+        toast.error(response.message);
         return;
       }
 
       if (response && response.token) {
         setToken(response.token);
         set({ isLoggedIn: true });
+        toast.success('로그인 되었습니다.');
       } else {
         console.error(response.message);
       }
@@ -38,20 +40,21 @@ const useAuthStore = create<AuthStore>((set) => ({
 
       if (response instanceof Error) {
         console.error(response.message);
-        alert(response.message);
+        toast.error(response.message);
         return;
       }
 
       if (response && response.token) {
-        alert('회원가입이 완료되었습니다. 로그인 해주세요.');
+        toast.success('회원가입이 완료되었습니다. 로그인 해주세요.');
       } else {
-        console.error(response.message);
+        toast.error(response.message);
       }
     },
 
     logout: () => {
       removeToken();
       set({ isLoggedIn: false });
+      toast.success('로그아웃 되었습니다.');
     },
   },
 }));
