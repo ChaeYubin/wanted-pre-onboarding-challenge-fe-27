@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { useLogout, useSelectIsLoggedIn } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
-import AlertModal from '@/components/AlertModal';
+import AlertModal from '@/components/common/AlertModal';
 
 const MainPage = () => {
   const isLoggedIn = useSelectIsLoggedIn();

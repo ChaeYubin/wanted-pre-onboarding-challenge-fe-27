@@ -1,6 +1,6 @@
 import { Trash } from 'lucide-react';
 
-import AlertModal from '@/components/AlertModal';
+import AlertModal from '@/components/common/AlertModal';
 import { Button } from '@/components/ui/button';
 import { useDeleteTodo } from '@/hooks/useTodo';
 import { getToken } from '@/utils/localStorage';

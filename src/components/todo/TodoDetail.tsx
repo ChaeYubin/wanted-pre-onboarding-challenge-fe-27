@@ -5,8 +5,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { getToken } from '@/utils/localStorage';
 import { useGetTodoById } from '@/hooks/useTodo';
-import TodoDeleteButton from '@/components/TodoDeleteButton';
-import TodoEditButton from '@/components/TodoEditButton';
+import TodoDeleteButton from './TodoDeleteButton';
+import TodoEditButton from './TodoEditButton';
 
 const TodoDetail = () => {
   const { todoId } = useParams();

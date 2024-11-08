@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
-import TodoList from '@/components/TodoList';
 import { useSelectIsLoggedIn } from '@/store/authStore';
+import TodoList from '@/components/todo/TodoList';
 
 const TodoPage = () => {
   const isLoggedIn = useSelectIsLoggedIn();

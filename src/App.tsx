@@ -6,9 +6,9 @@ import MainPage from './pages/MainPage';
 import AuthPage from './pages/AuthPage';
 import TodoPage from './pages/TodoPage';
 import './index.css';
-import TodoDetail from './components/TodoDetail';
-import EditTodo from './components/EditTodo';
 import { queryClient } from './lib/reactQueryProvider';
+import TodoDetail from './components/todo/TodoDetail';
+import EditTodo from './components/todo/EditTodo';
 
 function App() {
   return (
