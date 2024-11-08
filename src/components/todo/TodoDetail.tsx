@@ -7,6 +7,7 @@ import { getToken } from '@/utils/localStorage';
 import { useGetTodoById } from '@/hooks/useTodo';
 import TodoDeleteButton from './TodoDeleteButton';
 import TodoEditButton from './TodoEditButton';
+import { formatTodoDetail } from '@/utils/date';
 
 const TodoDetail = () => {
   const { todoId } = useParams();
@@ -36,6 +37,10 @@ const TodoDetail = () => {
             <Input type="text" value={todo.title} readOnly className="focus-visible:ring-0 border-none shadow-none" />
             <hr className="my-1" />
             <Textarea value={todo.content} className="focus-visible:ring-0 border-none shadow-none resize-none min-h-[300px]" readOnly />
+            <div className="px-2">
+              <p className="text-sm text-gray-600">작성: {formatTodoDetail(todo.createdAt)}</p>
+              <p className="text-sm text-gray-600">수정: {formatTodoDetail(todo.updatedAt)}</p>
+            </div>
           </>
         )}
       </CardContent>
