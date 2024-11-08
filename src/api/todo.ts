@@ -1,38 +1,27 @@
-import { DeleteTodoParams, GetTodoByIdParams, UpdateTodoParams } from './../types/todo';
-import axiosInstance from '../lib/axiosInstance';
-import { CreateTodoParams, TodoItem } from '@/types/todo';
+import axiosInstance from '@/lib/axiosInstance';
+import { CreateTodoParams, GetTodoByIdParams, DeleteTodoParams, UpdateTodoParams } from '@/types/todo';
 
-export const getTodos = async (token: string): Promise<TodoItem[] | Error> => {
-  try {
-    const response = await axiosInstance.get('/todos', {
+export const getTodos = (token: string) =>
+  axiosInstance
+    .get('/todos', {
       headers: {
         Authorization: token,
       },
-    });
+    })
+    .then((response) => response.data.data);
 
-    return response.data.data;
-  } catch (err: any) {
-    return new Error(err.response?.data?.details || '투두리스트 조회 오류가 발생했습니다.');
-  }
-};
-
-export const getTodoById = async ({ id, token }: GetTodoByIdParams): Promise<TodoItem | Error> => {
-  try {
-    const response = await axiosInstance.get(`/todos/${id}`, {
+export const getTodoById = ({ id, token }: GetTodoByIdParams) =>
+  axiosInstance
+    .get(`/todos/${id}`, {
       headers: {
         Authorization: token,
       },
-    });
+    })
+    .then((response) => response.data.data);
 
-    return response.data.data;
-  } catch (err: any) {
-    return new Error(err.response?.data?.details || '투두리스트 조회 오류가 발생했습니다.');
-  }
-};
-
-export const createTodo = async ({ title, content, token }: CreateTodoParams): Promise<TodoItem | Error> => {
-  try {
-    const response = await axiosInstance.post(
+export const createTodo = ({ title, content, token }: CreateTodoParams) =>
+  axiosInstance
+    .post(
       '/todos',
       { title, content },
       {
@@ -40,16 +29,12 @@ export const createTodo = async ({ title, content, token }: CreateTodoParams): P
           Authorization: token,
         },
       },
-    );
-    return response.data.data;
-  } catch (err: any) {
-    return new Error(err.response?.data?.details || '투두 생성 오류가 발생했습니다.');
-  }
-};
+    )
+    .then((response) => response.data.data);
 
-export const updateTodo = async ({ title, content, id, token }: UpdateTodoParams): Promise<TodoItem | Error> => {
-  try {
-    const response = await axiosInstance.put(
+export const updateTodo = ({ id, title, content, token }: UpdateTodoParams) =>
+  axiosInstance
+    .put(
       `/todos/${id}`,
       { title, content },
       {
@@ -57,22 +42,14 @@ export const updateTodo = async ({ title, content, id, token }: UpdateTodoParams
           Authorization: token,
         },
       },
-    );
-    return response.data.data;
-  } catch (err: any) {
-    return new Error(err.response?.data?.details || '투두 수정 오류가 발생했습니다.');
-  }
-};
+    )
+    .then((response) => response.data.data);
 
-export const deleteTodo = async ({ id, token }: DeleteTodoParams): Promise<{ data: null } | Error> => {
-  try {
-    const response = await axiosInstance.delete(`/todos/${id}`, {
+export const deleteTodo = ({ id, token }: DeleteTodoParams) =>
+  axiosInstance
+    .delete(`/todos/${id}`, {
       headers: {
         Authorization: token,
       },
-    });
-    return response.data.data;
-  } catch (err: any) {
-    return new Error(err.response?.data?.details || '투두 삭제 오류가 발생했습니다.');
-  }
-};
+    })
+    .then((response) => response.data.data);

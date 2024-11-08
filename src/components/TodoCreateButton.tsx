@@ -7,13 +7,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { DialogClose } from '@radix-ui/react-dialog';
-import { useCreateTodo } from '@/store/todoStore';
+import { useCreateTodo } from '@/hooks/useTodo';
+import { getToken } from '@/utils/localStorage';
 
 const TodoCreateButton = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
 
-  const createTodo = useCreateTodo();
+  const createTodoMutation = useCreateTodo({ token: getToken() });
 
   const resetInputs = () => {
     setTitle('');
@@ -56,7 +57,7 @@ const TodoCreateButton = () => {
             <Button
               type="button"
               onClick={() => {
-                createTodo(title, content);
+                createTodoMutation.mutate({ title, content });
                 resetInputs();
               }}
               disabled={title === '' || content === ''}
