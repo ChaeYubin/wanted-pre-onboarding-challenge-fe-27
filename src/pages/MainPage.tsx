@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 import { useLogout, useSelectIsLoggedIn } from '@/store/authStore';
 import { Button } from '@/components/ui/button';
-import AlertModal from '@/components/common/AlertModal';
+import Alert from '@/components/common/Alert';
 
 const MainPage = () => {
   const isLoggedIn = useSelectIsLoggedIn();
@@ -23,11 +23,11 @@ const MainPage = () => {
       <div className="flex items-center">
         <h1 className="text-5xl font-bold mb-3">Todo List</h1>
         {isLoggedIn && (
-          <AlertModal title="로그아웃 하시겠어요?" confirmButtonText="로그아웃" onConfirm={logout}>
+          <Alert title="로그아웃 하시겠어요?" confirmButtonText="로그아웃" onConfirm={logout}>
             <Button type="button" className="ml-auto">
               로그아웃
             </Button>
-          </AlertModal>
+          </Alert>
         )}
       </div>
       <p className="text-sm text-gray-600">할 일을 추가하고, 수정하고, 삭제할 수 있습니다.</p>

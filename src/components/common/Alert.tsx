@@ -21,7 +21,7 @@ interface Props {
   onConfirm: () => void;
 }
 
-const AlertModal = ({ title, description, cancelButtonText = '취소', confirmButtonText, onConfirm, children }: Props) => {
+const Alert = ({ title, description, cancelButtonText = '취소', confirmButtonText, onConfirm, children }: Props) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -39,4 +39,4 @@ const AlertModal = ({ title, description, cancelButtonText = '취소', confirmBu
   );
 };
 
-export default AlertModal;
+export default Alert;
